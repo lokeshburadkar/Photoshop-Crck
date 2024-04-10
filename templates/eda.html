@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exploratory Data Analysis</title>
+</head>
+<body>
+
+    <button onclick="window.location.href = 'main.html';">Go to Home Page</button>
+    <h1>Exploratory Data Analysis</h1>
+    
+    {% if plots_info %}
+        {% for plot in plots_info %}
+            <h2>{{ plot.description }}</h2>
+            <img src="{{ plot.filename }}" alt="{{ plot.description }}">
+        {% endfor %}
+    {% else %}
+        <p>No plots to display</p>
+    {% endif %}
+</body>
+</html>

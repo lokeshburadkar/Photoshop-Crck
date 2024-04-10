@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Information Form</title>
+    <style>
+        .student_info label {
+    font-size: 1.2rem;
+    font-style: oblique;
+    font-weight: 600;
+}
+h1 {
+    text-align: center;
+    margin: 3rem;
+    margin-top: 1rem;
+}
+.submit {
+    text-align: center;
+    width: 100%;
+}
+input[type="submit"] {
+    padding: 1rem 3rem;
+    background: black;
+    color: white;
+    font-weight: 700;
+    border: none;
+    margin-top: 2rem;
+}
+.student_info {
+    margin-top: 1rem;
+}
+.details {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: crimson;
+}
+    </style>
+</head>
+<body>
+    <h1>Enter Student Information</h1>
+    <div >
+    <form action="/predict"  method="POST">
+        <label class="details">Enter Your Basic Details:</label>
+        <div class="student_info">
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+   
+        <label for="10th_percentage">10th Percentage:</label>
+        <input type="number" id="10th_percentage" name="10th_percentage" step="1" min="0" max="100">
+
+        <label for="12th_percentage">12th Percentage:</label>
+        <input type="number" id="12th_percentage" name="12th_percentage" step="1" min="0" max="100">
+        <label for="12th_stream">12th Stream:</label>
+        <select id="12th_stream" name="12th_stream">
+            <option value="Science">Science</option>
+            <option value="Arts">Arts</option>
+            <option value="Commerce">Commerce</option>
+        </select>
+        <br><br>
+		
+		<label for="family_count">Family Count:</label>
+        <input type="number" id="family_count" name="family_count" step="1" min="0" max="100">
+     
+
+        <label for="siblings_count">Siblings Count:</label>
+        <input type="number" id="siblings_count" name="siblings_count" step="1" min="0" max="100">
+     
+		<label for="Father Occupation">Father Occupation:</label>
+        <select id="Father Occupation" name="Father Occupation">
+            <option value="Government Job">Government Job</option>
+            <option value="Private Job">Private Job</option>
+            <option value="Army">Army</option>
+			<option value="Housewife">Housewife</option>
+			<option value="Business">Business</option>
+			<option value="Farmer">Farmer</option>
+			<option value="No Job">No Job</option>
+        </select>
+        <br><br>
+        </div>
+        <label class="details">Enter Your 1st semester Marks:</label>
+        <div class="student_info">
+        <label for="english_1st_sem">English 1st Sem:</label>
+        <input type="number" id="english_1st_sem" name="english_1st_sem" step="0.01" min="0" max="100">
+
+
+        <label for="math_1st_sem">Math 1st Sem:</label>
+        <input type="number" id="math_1st_sem" name="math_1st_sem" step="0.01" min="0" max="100">
+
+
+        <label for="basic_science_1st_sem">Basic Science 1st Sem:</label>
+        <input type="number" id="basic_science_1st_sem" name="basic_science_1st_sem" step="0.01" min="0" max="100">
+		        <label for="ict_1st_sem">ICT 1st Sem:</label>
+        <input type="number" id="ict_1st_sem" name="ict_1st_sem" step="0.01" min="0" max="100">
+
+        <label for="wpc_1st_sem">WPC 1st Sem:</label>
+        <input type="number" id="wpc_1st_sem" name="wpc_1st_sem" step="0.01" min="0" max="100">
+       </div>
+       <br><br>
+       <label class="details">Enter Your 2nd semester Marks:</label>
+       <div class="student_info">
+        <label for="eec_2st_sem">EEC 2st Sem:</label>
+        <input type="number" id="eec_2st_sem" name="eec_2st_sem" step="0.01" min="0" max="100">
+
+        <label for="ami_2st_sem">AMI 2st Sem:</label>
+        <input type="number" id="ami_2st_sem" name="ami_2st_sem" step="0.01" min="0" max="100">
+       
+
+        <label for="bec_2st_sem">BEC 2st Sem:</label>
+        <input type="number" id="bec_2st_sem" name="bec_2st_sem" step="0.01" min="0" max="100">
+       
+
+        <label for="pci_2st_sem">PCI 2st Sem:</label>
+        <input type="number" id="pci_2st_sem" name="pci_2st_sem" step="0.01" min="0" max="100">
+        
+
+        <label for="bcc_2st_sem">BCC 2st Sem:</label>
+        <input type="number" id="bcc_2st_sem" name="bcc_2st_sem" step="0.01" min="0" max="100">
+      
+
+        <label for="cph_2st_sem">CPH 2st Sem:</label>
+        <input type="number" id="cph_2st_sem" name="cph_2st_sem" step="0.01" min="0" max="100">
+       
+
+        <label for="wpd_2st_sem">WPD 2st Sem:</label>
+        <input type="number" id="wpd_2st_sem" name="wpd_2st_sem" step="0.01" min="0" max="100">
+    </div>
+    <br><br>
+    <label class="details">Enter Your 3rd semester Marks:</label>
+    <div class="student_info">
+        <label for="oop_3st_sem">OOP 3st Sem:</label>
+        <input type="number" id="oop_3st_sem" name="oop_3st_sem" step="0.01" min="0" max="100">
+    
+
+        <label for="dsu_3st_sem">DSU 3st Sem:</label>
+        <input type="number" id="dsu_3st_sem" name="dsu_3st_sem" step="0.01" min="0" max="100">
+       
+
+        <label for="cgr_3st_sem">CGR 3st Sem:</label>
+        <input type="number" id="cgr_3st_sem" name="cgr_3st_sem" step="0.01" min="0" max="100">
+   
+
+        <label for="dms_3st_sem">DMS 3st Sem:</label>
+        <input type="number" id="dms_3st_sem" name="dms_3st_sem" step="0.01" min="0" max="100">
+    
+
+        <label for="dte_3st_sem">DTE 3st Sem:</label>
+        <input type="number" id="dte_3st_sem" name="dte_3st_sem" step="0.01" min="0" max="100">
+      </div>
+      <br><br>
+      <label class="details">Enter Your 4th semester Marks:</label>
+      <div class="student_info">
+        <label for="jpr_4st_sem">JPR 4st Sem:</label>
+        <input type="number" id="jpr_4st_sem" name="jpr_4st_sem" step="0.01" min="0" max="100">
+    
+
+        <label for="sen_4st_sem">SEN 4st Sem:</label>
+        <input type="number" id="sen_4st_sem" name="sen_4st_sem" step="0.01" min="0" max="100">
+     
+
+        <label for="dcc_4st_sem">DCC 4st Sem:</label>
+        <input type="number" id="dcc_4st_sem" name="dcc_4st_sem" step="0.01" min="0" max="100">
+     
+
+        <label for="mic_4st_sem">MIC 4st Sem:</label>
+        <input type="number" id="mic_4st_sem" name="mic_4st_sem" step="0.01" min="0" max="100">
+      
+
+        <label for="gad_4st_sem">GAD 4st Sem:</label>
+        <input type="number" id="gad_4st_sem" name="gad_4st_sem" step="0.01" min="0" max="100">
+    </div>
+
+    <br><br>
+        <div class="submit"><input type="submit" value="Submit"></div>
+    </form>
+    </div>
+
+    
+    <h2> {{ prediction }}</h2>
+      
+</body>
+</html>

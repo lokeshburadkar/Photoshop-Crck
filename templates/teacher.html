@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Page</title>
+    <style>
+        h1 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.info {
+ display: flex;
+ justify-content: space-between;
+}
+input[type="file"] {
+    font-size: 1rem;
+}
+    </style>
+</head>
+<body>
+    <h1>Teacher Page</h1>
+    <div class="info">
+    <!-- Form for uploading CSV file -->
+    <form action="/teacher" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv">
+        <input type="submit" value="Upload">
+    </form>
+
+    <form action="/eda" method="post">
+        <input type="submit" value="EDA">
+    </form>
+</div>
+    <!-- Display uploaded CSV data -->
+    {% if table %}
+    <h2>Uploaded CSV Data</h2>
+    {{ table|safe }}
+    {% endif %}
+
+</body>
+</html>
