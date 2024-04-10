@@ -15,9 +15,11 @@ input[type="file"] {
     font-size: 1rem;
 }
     </style>
+
 </head>
 <body>
-    <h1>Teacher Page</h1>
+    <h1>Analysis Page for overall student </h1>
+    <a href="{{ url_for('home') }}"><button>Home</button></a>
     <div class="info">
     <!-- Form for uploading CSV file -->
     <form action="/teacher" method="post" enctype="multipart/form-data">

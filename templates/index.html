@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Student Information Form</title>
     <style>
         .student_info label {
@@ -34,10 +35,14 @@ input[type="submit"] {
     color: crimson;
 }
     </style>
+
 </head>
 <body>
+    <a href="{{ url_for('home') }}"><button>Home</button></a>
+
     <h1>Enter Student Information</h1>
     <div >
+        
     <form action="/predict"  method="POST">
         <label class="details">Enter Your Basic Details:</label>
         <div class="student_info">
