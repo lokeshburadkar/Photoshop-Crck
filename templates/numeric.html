@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exploratory Data Analysis</title>
+</head>
+<body>
+
+    <a href="{{ url_for('home') }}"><button>Home</button></a>
+    <h1 style="text-align: center;">Exploratory Data Analysis</h1>
+    <h1 style="text-align: center;">Prediction of model vs number of student</h1>
+    <h2 style="text-align: center; display: flex; justify-content: center;">{{ result|safe }}</h2>
+
+    <h1 style="text-align: center;">Pass Or Fail with respect to number of student</h1>
+    <h2 style="text-align: center; display: flex; justify-content: center;">{{ result_pass|safe }}</h2>
+    
+    <h1 style="text-align: center;">Prediction Result Vs 1st Sem marks Analysis</h1>
+    <div style="text-align: center;">
+        <pre>{{ result_group|safe }}</pre>
+    </div>
+
+    <h1 style="text-align: center;">Prediction Result Vs 2nd Sem marks Analysis</h1>
+    <div style="text-align: center;">
+        <pre>{{ result_group_2nd|safe }}</pre>
+    </div>
+
+    <h1 style="text-align: center;">Prediction Result Vs 3rd Sem marks Analysis</h1>
+    <div style="text-align: center;">
+        <pre>{{ result_group_3rd|safe }}</pre>
+    </div>
+
+    <h1 style="text-align: center;">Prediction Result Vs 4th Sem marks Analysis</h1>
+    <div style="text-align: center;">
+        <pre>{{ result_group_4th|safe }}</pre>
+    </div>
+    
+</body>
+</html>

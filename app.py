@@ -27,6 +27,7 @@ for filename in os.listdir(static_folder):
 app = Flask(__name__)
 
 global_df = None
+global_df_dup = None
 
 model = pickle.load(open('xgboost_model.pkl', 'rb'))
 @app.route('/')
@@ -165,6 +166,8 @@ def generate_box_plots(df, predicted_column):
 @app.route('/teacher', methods=['GET', 'POST'])
 def teacher():
     global global_df
+    global global_df_dup 
+
 
     if request.method == 'POST':
         file = request.files['file']
@@ -188,8 +191,7 @@ def teacher():
             df['prediction'] = df['prediction'].map(target_mapping)
 
             global_df = df  # Store the DataFrame in the global variable
-
-
+            global_df_dup=df
 
             return render_template('teacher.html', table=df.to_html())
         
@@ -212,6 +214,96 @@ def eda():
 @app.route('/')
 def home():
     return render_template('main.html')
+
+def calculate_descriptive_stats(df, columns, groupby_col, category_order):
+    """
+    Calculate descriptive statistics for each numeric column in columns grouped by groupby_col,
+    maintaining the custom order specified in category_order.
+    """
+    # Group by groupby_col and calculate descriptive statistics for each numeric column
+    grouped_data = {}
+    for col in columns:
+        grouped_data[col] = df.groupby(groupby_col)[col].agg(['min', 'max', 'mean', 'median', 'count']).reindex(category_order).reset_index()
+
+    # Convert each group to a DataFrame and store in a dictionary
+    grouped_data_frames = {col: pd.DataFrame(group) for col, group in grouped_data.items()}
+
+    # # Format the result to display
+    # result_group = ""
+    # for col, group in grouped_data_frames.items():
+    #     result_group += f"\n{col}: \n{group.to_string(index=False)}\n"
+
+    # return result_group
+
+
+    # Format the result as an HTML table
+    result_group = "<table border='1' style='margin: 0 auto;'>"
+    for col, group in grouped_data_frames.items():
+        result_group += f"<tr><th colspan='6'>{col}</th></tr>"
+        result_group += "<tr><th>Predicted Marks Category</th><th>Min Marks</th><th>Max Marks</th><th>Mean Marks</th><th>Median Marks</th><th>Student Count</th></tr>"
+        for index, row in group.iterrows():
+            result_group += f"<tr><td>{row[groupby_col]}</td><td>{int(row['min'])}</td><td>{int(row['max'])}</td><td>{int(row['mean'])}</td><td>{int(row['median'])}</td><td>{int(row['count'])}</td></tr>"
+    result_group += "</table>"
+
+    # Wrap the result in a <div> tag for center alignment
+    result_group = f"<div style='text-align: center;'>{result_group}</div>"
+
+    return result_group
+
+@app.route('/numeda', methods=['POST'])
+def numeda():
+    global global_df
+        
+    if global_df is not None:
+        # Define the custom category order
+        category_order = ['<35%','35% to 50%', '50% to 75%','75% to 100%']
+        # Group by 'Category' and calculate the sum of 'Value', maintaining the custom order
+        result = global_df.groupby('prediction', sort=False).size().reindex(category_order).reset_index()
+        result=pd.DataFrame(result)
+        result.columns=['Prediction Cat','No of Student']
+        result_html = result.to_html(index=False)
+
+        global_df['Result']=np.where(global_df['prediction'].isin(['<35%']),'Fail','Pass')
+        result_html_pass = global_df.groupby('Result', sort=False).size().reset_index()
+        result_html_pass=pd.DataFrame(result_html_pass)
+        result_html_pass.columns=['Prediction Cat','No of Student']
+
+        result_html_pass = result_html_pass.to_html(index=False)
+
+
+        col_1st_same=['English_1st_Sem', 'Math_1st_Sem', 'Basic Science_1st_Sem', 'ICT_1st_Sem', 'WPC_1st_Sem']
+        col_2nd_same=['EEC_2st_Sem','AMI_2st_Sem', 'BEC_2st_Sem', 'PCI_2st_Sem', 'BCC_2st_Sem','CPH_2st_Sem', 'WPD_2st_Sem']
+        col_3rd_same=['OOP_3st_Sem', 'DSU_3st_Sem','CGR_3st_Sem', 'DMS_3st_Sem', 'DTE_3st_Sem']
+        col_4th_same=['JPR_4st_Sem','SEN_4st_Sem', 'DCC_4st_Sem', 'MIC_4st_Sem', 'GAD_4st_Sem'] 
+        # Define custom category order
+        category_order = ['<35%', '35% to 50%', '50% to 75%', '75% to 100%']
+
+        # # Group by 'prediction' and calculate descriptive statistics for each numeric column, maintaining the custom order
+        # grouped_data = {}
+        # for col in col_1st_same:
+        #     grouped_data[col] = global_df.groupby('prediction')[col].describe().reindex(category_order).reset_index()
+
+        # # Convert each group to a DataFrame and store in a dictionary
+        # grouped_data_frames = {col: pd.DataFrame(group) for col, group in grouped_data.items()}
+
+        # # Format the result to display
+        # result_group = ""
+        # for col, group in grouped_data_frames.items():
+        #     result_group += f"\n{col}: \n{group.to_string(index=False)}\n"
+        result_group=calculate_descriptive_stats(global_df, col_1st_same, 'prediction', category_order)
+        result_group_2nd=calculate_descriptive_stats(global_df, col_2nd_same, 'prediction', category_order)
+        result_group_3rd=calculate_descriptive_stats(global_df, col_3rd_same, 'prediction', category_order)
+        result_group_4th=calculate_descriptive_stats(global_df, col_4th_same, 'prediction', category_order)
+
+        # Render EDA page with plots_info
+        return render_template('numeric.html', result=result_html,
+                               result_pass=result_html_pass,
+                               result_group=result_group,result_group_2nd=result_group_2nd,
+                               result_group_3rd=result_group_3rd,result_group_4th=result_group_4th)
+    else:
+        return "No data available for EDA."
+
+
     
 
 if __name__ == '__main__':

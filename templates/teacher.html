@@ -14,6 +14,14 @@
 input[type="file"] {
     font-size: 1rem;
 }
+input[type="submit"] {
+    padding: 1rem 3rem;
+    background: black;
+    color: white;
+    font-weight: 700;
+    border: none;
+    margin-top: 2rem;
+}
     </style>
 
 </head>
@@ -25,6 +33,10 @@ input[type="file"] {
     <form action="/teacher" method="post" enctype="multipart/form-data">
         <input type="file" name="file" accept=".csv">
         <input type="submit" value="Upload">
+    </form>
+
+    <form action="/numeda" method="post">
+        <input type="submit" value="Numeric Analaysis">
     </form>
 
     <form action="/eda" method="post">
