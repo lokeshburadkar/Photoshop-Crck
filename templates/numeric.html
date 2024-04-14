@@ -2,36 +2,98 @@
 <html>
 <head>
     <title>Exploratory Data Analysis</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+            background-color: #f8f9fa; /* Light gray background */
+            font-family: Arial, sans-serif; /* Font family for better readability */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Updated shadow effect */
+        }
+        .center {
+            text-align: center;
+            color: #333;
+        }
+        .mb-3 {
+            margin-bottom: 20px;
+        }
+        .result-container {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .result-container table {
+            margin: 0 auto;
+            width: 100%; /* Full width for tables */
+            max-width: 800px; /* Maximum width for tables */
+        }
+        .result-container th {
+            font-size: 16px; /* Font size for table headers */
+            font-weight: bold; /* Bold font weight for emphasis */
+            text-align: center; /* Center-align the table headers */
+        }
+        .result-container td {
+            text-align: center; /* Center-align the table data */
+        }
+        .btn-primary {
+            background-color: #007bff; /* Primary button color */
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker hover color */
+            border-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <a href="{{ url_for('home') }}" class="btn btn-primary mb-3">Home</a>
+        <h1 class="center">Exploratory Data Analysis</h1>
 
-    <a href="{{ url_for('home') }}"><button>Home</button></a>
-    <h1 style="text-align: center;">Exploratory Data Analysis</h1>
-    <h1 style="text-align: center;">Prediction of model vs number of student</h1>
-    <h2 style="text-align: center; display: flex; justify-content: center;">{{ result|safe }}</h2>
-
-    <h1 style="text-align: center;">Pass Or Fail with respect to number of student</h1>
-    <h2 style="text-align: center; display: flex; justify-content: center;">{{ result_pass|safe }}</h2>
-    
-    <h1 style="text-align: center;">Prediction Result Vs 1st Sem marks Analysis</h1>
-    <div style="text-align: center;">
-        <pre>{{ result_group|safe }}</pre>
+        <div class="result-container">
+            <h2 class="center">Prediction of model vs number of students</h2>
+            <h2 class="center">{{ result|safe }}</h2>
+        </div>
+        
+        <div class="result-container">
+            <h2 class="center">Pass or Fail with respect to number of students</h2>
+            <h2 class="center">{{ result_pass|safe }}</h2>
+        </div>
+        
+        <div class="result-container">
+            <h2 class="center">Prediction Result vs 1st Sem marks Analysis</h2>
+            <div class="text-center">
+                <pre>{{ result_group|safe }}</pre>
+            </div>
+        </div>
+        
+        <div class="result-container">
+            <h2 class="center">Prediction Result vs 2nd Sem marks Analysis</h2>
+            <div class="text-center">
+                <pre>{{ result_group_2nd|safe }}</pre>
+            </div>
+        </div>
+        
+        <div class="result-container">
+            <h2 class="center">Prediction Result vs 3rd Sem marks Analysis</h2>
+            <div class="text-center">
+                <pre>{{ result_group_3rd|safe }}</pre>
+            </div>
+        </div>
+        
+        <div class="result-container">
+            <h2 class="center">Prediction Result vs 4th Sem marks Analysis</h2>
+            <div class="text-center">
+                <pre>{{ result_group_4th|safe }}</pre>
+            </div>
+        </div>
     </div>
-
-    <h1 style="text-align: center;">Prediction Result Vs 2nd Sem marks Analysis</h1>
-    <div style="text-align: center;">
-        <pre>{{ result_group_2nd|safe }}</pre>
-    </div>
-
-    <h1 style="text-align: center;">Prediction Result Vs 3rd Sem marks Analysis</h1>
-    <div style="text-align: center;">
-        <pre>{{ result_group_3rd|safe }}</pre>
-    </div>
-
-    <h1 style="text-align: center;">Prediction Result Vs 4th Sem marks Analysis</h1>
-    <div style="text-align: center;">
-        <pre>{{ result_group_4th|safe }}</pre>
-    </div>
-    
 </body>
 </html>

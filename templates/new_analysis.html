@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('home') }}" class="btn btn-primary mb-3">Home</a>
+    <h1 class="center">Exploratory Data Analysis</h1>
+
+    {% if result_tables %}
+        {% for result_name, result_df in result_tables %}
+            <h2>Predicted Marks vs {{ result_name }} Semester Subject Marks Analysis</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Min Marks</th>
+                        <th>Max Marks</th>
+                        <th>Student Appeared</th>
+                        <th>Predicted Pass Student</th>
+                        <th>Pass %</th>
+                        <th>Predicted 35% to 50% Student</th>
+                        <th>Predicted 50% to 75% Student</th>
+                        <th>Predicted >75% Student</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, row in result_df.iterrows() %}
+                        <tr>
+                            <td>{{ row['Subject'] }}</td>
+                            <td>{{ row['Min Marks'] }}</td>
+                            <td>{{ row['Max Marks'] }}</td>
+                            <td>{{ row['Student Appeared'] }}</td>
+                            <td>{{ row['Predicted Pass Student'] }}</td>
+                            <td>{{ row['Pass %'] }}</td>
+                            <td>{{ row['Predicted 35% to 50% Student'] }}</td>
+                            <td>{{ row['Predicted 50% to 75% Student'] }}</td>
+                            <td>{{ row['Predicted >75% Student'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    {% else %}
+        <p>No data available for analysis.</p>
+    {% endif %}
+</body>
+</html>
