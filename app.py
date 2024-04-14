@@ -295,11 +295,60 @@ def numeda():
         result_group_3rd=calculate_descriptive_stats(global_df, col_3rd_same, 'prediction', category_order)
         result_group_4th=calculate_descriptive_stats(global_df, col_4th_same, 'prediction', category_order)
 
+        global_df = global_df  # Store the DataFrame in the global variable
+
+
         # Render EDA page with plots_info
         return render_template('numeric.html', result=result_html,
                                result_pass=result_html_pass,
                                result_group=result_group,result_group_2nd=result_group_2nd,
                                result_group_3rd=result_group_3rd,result_group_4th=result_group_4th)
+    else:
+        return "No data available for EDA."
+
+@app.route('/final_analysis', methods=['POST'])
+def final_analysis():
+    global global_df
+        
+    if global_df is not None:
+        col_1st_same=['English_1st_Sem', 'Math_1st_Sem', 'Basic Science_1st_Sem', 'ICT_1st_Sem', 'WPC_1st_Sem']
+        col_2nd_same=['EEC_2st_Sem','AMI_2st_Sem', 'BEC_2st_Sem', 'PCI_2st_Sem', 'BCC_2st_Sem','CPH_2st_Sem', 'WPD_2st_Sem']
+        col_3rd_same=['OOP_3st_Sem', 'DSU_3st_Sem','CGR_3st_Sem', 'DMS_3st_Sem', 'DTE_3st_Sem']
+        col_4th_same=['JPR_4st_Sem','SEN_4st_Sem', 'DCC_4st_Sem', 'MIC_4st_Sem', 'GAD_4st_Sem']
+
+        global_df['Pred_pass_>35%'] = np.where(global_df['prediction'].isin(['<35%']),0,1)
+        global_df['Pred_35_50%'] = np.where(global_df['prediction'].isin(['35% to 50%']),0,1)
+        global_df['Pred_50_75%'] = np.where(global_df['prediction'].isin(['50% to 75%']),0,1)
+        global_df['Pred_75_100%'] = np.where(global_df['prediction'].isin(['75% to 100%']),0,1)
+
+        result_tables = []
+        for col in [col_1st_same, col_2nd_same, col_3rd_same, col_4th_same]:
+            sub_name = []
+            min_marks = []
+            max_marks = []
+            count_marks = []
+            for i in col:
+                sub_name.append(i)
+                min_marks.append(global_df[i].min())
+                max_marks.append(global_df[i].max())
+                count_marks.append(global_df[i].count())
+            result_df = pd.DataFrame({
+                'Subject': sub_name,
+                'Min Marks': min_marks,
+                'Max Marks': max_marks,
+                'Student Appeared': count_marks
+            })
+            result_df['Predicted Pass Student'] = global_df['Pred_pass_>35%'].sum()
+            result_df['Pass %'] = round((result_df['Predicted Pass Student'] / result_df['Student Appeared']) * 100,2)
+            result_df['Predicted 35% to 50% Student'] = global_df['Pred_35_50%'].sum()
+            result_df['Predicted 50% to 75% Student'] = global_df['Pred_50_75%'].sum()
+            result_df['Predicted >75% Student'] = global_df['Pred_75_100%'].sum()
+            name=str(col)
+            result_name = '_'.join(col[0].split('_')[1:2])
+            result_tables.append((result_name, result_df))
+       
+           # Render EDA page with plots_info
+        return render_template('new_analysis.html', result_tables=result_tables)
     else:
         return "No data available for EDA."
 
